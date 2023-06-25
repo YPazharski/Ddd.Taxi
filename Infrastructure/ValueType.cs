@@ -55,17 +55,25 @@ namespace Ddd.Infrastructure
 				return ObjType.Name;
             var result = new StringBuilder(ObjType.Name);
 			result.Append("(");
-			foreach (var prop in ObjProps.OrderBy(p => p.Name))
-			{
-				result.Append(prop.Name);
-				result.Append(": ");
-				var propValue = prop.GetValue(this);
-				if (propValue != null)
-					result.Append(propValue.ToString());
-				result.Append("; ");
-			}
-			result.Remove(result.Length - 2, 2);
+			var valuesDescription = GetValuesDescription();
+			result.Append(valuesDescription);
 			result.Append(")");
+			return result.ToString();
+        }
+
+		string GetValuesDescription()
+		{
+			var result = new StringBuilder();
+            foreach (var prop in ObjProps.OrderBy(p => p.Name))
+            {
+                result.Append(prop.Name);
+                result.Append(": ");
+                var propValue = prop.GetValue(this);
+                if (propValue != null)
+                    result.Append(propValue.ToString());
+                result.Append("; ");
+            }
+            result.Remove(result.Length - 2, 2);
 			return result.ToString();
         }
     }
