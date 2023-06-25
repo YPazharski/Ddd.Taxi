@@ -14,10 +14,12 @@ namespace Ddd.Infrastructure
 	{
 		static Type ObjType { get; }
 		static PropertyInfo[] ObjProps { get; }
+		static int HashId { get; }
 		static ValueType()
 		{
             ObjType = typeof(T);
 			ObjProps = ObjType.GetProperties(BindingFlags.Instance | BindingFlags.Public);
+			HashId = ObjType.GetHashCode();
         }
 
         public override bool Equals(object obj)
@@ -46,7 +48,16 @@ namespace Ddd.Infrastructure
 
         public override int GetHashCode()
         {
-            return base.GetHashCode();
+            unchecked
+			{
+				var result = HashId;
+				foreach (var prop in ObjProps)
+				{
+					result *= 1009 * prop.GetType().GetHashCode() + 4457 * prop.Name.GetHashCode() 
+						+ 7369 * prop.GetValue(this).GetHashCode();
+				}
+				return result;
+			}
         }
 
         public override string ToString()
