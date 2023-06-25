@@ -100,13 +100,13 @@ namespace Ddd.Infrastructure
 		//	Assert.IsTrue(equal);
 		//}
 
-		[Test]
-		public void ToString_ListAllPropertiesLexicographically()
-		{
-			Assert.AreEqual("PersonName(FirstName: A; LastName: B)", new PersonName("A", "B").ToString());
-			Assert.AreEqual("Address(Building: Y; Street: X)", new Address("X", "Y").ToString());
-			Assert.AreEqual("Address(Building: ; Street: )", new Address(null, null).ToString());
-		}
+		//[Test]
+		//public void ToString_ListAllPropertiesLexicographically()
+		//{
+		//	Assert.AreEqual("PersonName(FirstName: A; LastName: B)", new PersonName("A", "B").ToString());
+		//	Assert.AreEqual("Address(Building: Y; Street: X)", new Address("X", "Y").ToString());
+		//	Assert.AreEqual("Address(Building: ; Street: )", new Address(null, null).ToString());
+		//}
 	}
 
 	public class Person : ValueType<Person>

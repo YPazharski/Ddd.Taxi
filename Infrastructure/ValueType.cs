@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
 namespace Ddd.Infrastructure
 {
@@ -42,5 +43,30 @@ namespace Ddd.Infrastructure
 			}
 			return true;
 		}
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+			if (ObjProps.Length == 0)
+				return ObjType.Name;
+            var result = new StringBuilder(ObjType.Name);
+			result.Append("(");
+			foreach (var prop in ObjProps.OrderBy(p => p.Name))
+			{
+				result.Append(prop.Name);
+				result.Append(": ");
+				var propValue = prop.GetValue(this);
+				if (propValue != null)
+					result.Append(propValue.ToString());
+				result.Append("; ");
+			}
+			result.Remove(result.Length - 2, 2);
+			result.Append(")");
+			return result.ToString();
+        }
     }
 }
