@@ -24,6 +24,7 @@ namespace Ddd.Infrastructure
 
         public override bool Equals(object obj)
         {
+			if (ReferenceEquals(this, obj)) return true;
             if (obj == null) return false;
 			if (obj.GetType() != ObjType) return false;
 			return Equals((T)obj);
